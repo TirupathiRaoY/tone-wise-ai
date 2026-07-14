@@ -9,13 +9,13 @@ personalization — built entirely with FREE AI APIs.
 | Module | File(s) | Status |
 |---|---|---|
 | 1. AI Provider Manager | `backend/ai_provider_manager.py`, `backend/config.py` | ✅ Done |
-| 2. Prompt Engine (tone/jargon) | `backend/prompt_engine.py` | ⏳ Not built |
-| 3. Input Handler (files/text) | `backend/input_handler.py` | ⏳ Not built |
-| 4. Chat / Q&A Manager | `backend/chat_manager.py` | ⏳ Not built |
-| 5. Role & Tone Selector | (inside frontend) | ⏳ Not built |
-| 6. Frontend UI | `frontend/index.html`, `style.css`, `script.js` | ⏳ Not built |
-| 7. Storage (Feedback + History) | `backend/database.py` | ⏳ Not built |
-| 8. Admin Dashboard | `admin/dashboard.html` | ⏳ Not built |
+| 2. Prompt Engine (tone/jargon) | `backend/prompt_engine.py` | ✅ Done |
+| 3. Input Handler (files/text) | `backend/input_handler.py` | ✅ Done |
+| 4. Chat / Q&A Manager | `backend/chat_manager.py` | ✅ Done |
+| 5. Role & Tone Selector | `backend/role_tone_selector.py` | ✅ Done |
+| 6. Frontend UI | `frontend/index.html`, `frontend/style.css`, `frontend/script.js` | ✅ Done |
+| 7. Storage (Feedback + History) | `backend/database.py` | ✅ Done |
+| 8. Admin Dashboard | `admin/dashboard.html` | ✅ Done |
 
 ## Setup (do this once)
 
