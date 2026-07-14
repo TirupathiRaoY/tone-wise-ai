@@ -1,0 +1,23 @@
+# Local environment settings and credentials
+.env
+.env.*
+!.env.example
+
+# Python build and runtime files
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+*.db
+
+# Node dependencies and generated output
+node_modules/
+dist/
+build/
+
+# Editor and operating-system files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

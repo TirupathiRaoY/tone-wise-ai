@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Turn technical content into clear explanations for every team.">
+  <title>ToneWise AI | Clearer explanations for every team</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="ToneWise AI home">
+        <span class="brand-mark" aria-hidden="true">T</span>
+        <span>ToneWise <strong>AI</strong></span>
+      </a>
+      <p class="header-note">Make complex information clear.</p>
+      <div class="account-nav" id="account-nav">
+        <a id="dashboard-link" href="/dashboard">Dashboard</a>
+        <a id="signin-link" href="/signin">Sign in</a>
+        <button id="logout-button" type="button" hidden>Log out</button>
+      </div>
+    </header>
+
+    <section class="hero" id="top">
+      <p class="eyebrow">PLAIN-LANGUAGE EXPLANATIONS</p>
+      <h1>Understand the important stuff,<br><span>without the jargon.</span></h1>
+      <p class="hero-copy">Paste technical content or upload a document. ToneWise AI will explain it clearly, without the jargon.</p>
+    </section>
+
+    <section class="workspace" aria-label="Simplify technical content">
+      <div class="card input-card">
+        <div class="section-heading">
+          <div>
+            <p class="step-label">STEP 1</p>
+            <h2>Add your content</h2>
+          </div>
+          <span class="optional">Paste text or upload a file</span>
+        </div>
+
+        <label class="sr-only" for="source-text">Technical content to simplify</label>
+        <textarea id="source-text" maxlength="12000" placeholder="Paste technical, industry, or company content here…"></textarea>
+        <div class="voice-input-row"><button id="source-voice-button" class="voice-button" type="button" aria-label="Dictate content">&#127908; Dictate content</button><span id="voice-input-status" class="voice-input-status" aria-live="polite"></span></div>
+        <div class="input-footer">
+          <span id="character-count">0 / 12,000 characters</span>
+          <span>Supported files: TXT, PDF, DOCX</span>
+        </div>
+
+        <div class="upload-row">
+          <input id="file-input" type="file" accept=".txt,.pdf,.docx" hidden>
+          <label class="upload-button" for="file-input">
+            <span aria-hidden="true">↑</span> Choose a file
+          </label>
+          <span id="file-name" class="file-name">No file selected</span>
+          <button id="remove-file" class="text-button" type="button" hidden>Remove</button>
+        </div>
+      </div>
+
+      <div class="card settings-card">
+        <div class="section-heading">
+          <div>
+            <p class="step-label">STEP 2</p>
+            <h2>Choose your explanation style</h2>
+          </div>
+        </div>
+
+        <div class="selector-grid">
+          <div>
+            <label for="tone-select">Tone</label>
+            <select id="tone-select" aria-describedby="tone-help"></select>
+            <p id="tone-help" class="help-text">How the explanation should sound</p>
+          </div>
+          <div>
+            <label for="language-select">Explanation language</label>
+            <select id="language-select" aria-describedby="language-help"></select>
+            <p id="language-help" class="help-text">The language used for the AI explanation</p>
+          </div>
+        </div>
+
+        <button id="simplify-button" class="primary-button" type="button">
+          <span aria-hidden="true">✦</span> Simplify this content
+        </button>
+        <p id="status-message" class="status-message" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section id="result-section" class="result-section" hidden aria-live="polite">
+      <div class="card result-card">
+        <div class="result-heading">
+          <div>
+            <p class="step-label">YOUR CLEAR EXPLANATION</p>
+            <h2>Here is what it means</h2>
+          </div>
+          <div class="result-badges">
+            <span id="language-label" class="provider-label" hidden></span>
+            <span id="provider-label" class="provider-label" hidden></span>
+          </div>
+        </div>
+        <article id="simplified-result" class="simplified-result"></article>
+        <div class="voice-response-row"><button id="read-aloud-button" class="text-button" type="button" hidden>Read explanation aloud</button><label class="voice-toggle"><input id="voice-replies-toggle" type="checkbox" checked> Speak AI replies</label></div>
+        <div id="download-box" class="download-box" hidden>
+          <span>Download this explanation:</span>
+          <a id="download-txt" class="download-button" href="#">TXT file</a>
+          <a id="download-docx" class="download-button" href="#">Word file</a>
+        </div>
+        <div id="share-team-box" class="download-box" hidden>
+          <span>Share with a team:</span>
+          <select id="share-team-select" aria-label="Choose team"></select>
+          <button id="share-team-button" class="download-button" type="button">Share to team</button>
+          <span id="share-team-message" class="feedback-message" aria-live="polite"></span>
+        </div>
+        <div id="feedback-box" class="feedback-box" hidden>
+          <p>Was this explanation clear?</p>
+          <div class="feedback-buttons">
+            <button class="feedback-button" type="button" data-clear="true">Yes, it was clear</button>
+            <button class="feedback-button" type="button" data-clear="false">No, I need more help</button>
+          </div>
+          <span id="feedback-message" class="feedback-message" aria-live="polite"></span>
+        </div>
+      </div>
+    </section>
+
+    <section id="chat-section" class="chat-section" hidden>
+      <div class="chat-heading">
+        <div>
+          <p class="step-label">NEED MORE CLARITY?</p>
+          <h2>Ask a follow-up question</h2>
+        </div>
+        <p>Ask about words, details, or what this means for you.</p>
+      </div>
+      <div id="chat-messages" class="chat-messages" aria-live="polite"></div>
+      <form id="chat-form" class="chat-form">
+        <label class="sr-only" for="chat-question">Your follow-up question</label>
+        <input id="chat-question" type="text" placeholder="For example: What does this mean for my team?" autocomplete="off">
+        <button id="chat-voice-button" class="voice-button compact" type="button" aria-label="Ask a question by voice" title="Ask by voice">&#127908;</button>
+        <button class="send-button" type="submit">Send <span aria-hidden="true">→</span></button>
+      </form>
+    </section>
+
+    <section id="team-section" class="team-section" hidden>
+      <div class="team-heading">
+        <div>
+          <p class="step-label">TEAM COLLABORATION</p>
+          <h2>Share and discuss this explanation</h2>
+        </div>
+        <button id="share-button" class="share-button" type="button">Copy share link</button>
+      </div>
+      <p id="share-message" class="share-message" aria-live="polite"></p>
+      <p class="team-help">Anyone with this link can view this saved explanation and add team notes.</p>
+      <div id="team-comments" class="team-comments" aria-live="polite"></div>
+      <p id="comments-empty" class="comments-empty">No team notes yet. Start the discussion below.</p>
+      <form id="team-form" class="team-form">
+        <div>
+          <label for="team-name">Your name</label>
+          <input id="team-name" type="text" maxlength="80" placeholder="For example: Priya">
+        </div>
+        <div>
+          <label for="team-note">Team note</label>
+          <textarea id="team-note" maxlength="2000" placeholder="Add a question, clarification, or next step for your team…"></textarea>
+        </div>
+        <button class="primary-button" type="submit">Add team note</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>© 2026 ToneWise AI · Built to make work easier to understand</footer>
+  <script src="script.js"></script>
+</body>
+</html>

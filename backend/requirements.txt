@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+requests
+python-dotenv
+python-multipart
+pypdf
+python-docx
+itsdangerous
+email-validator

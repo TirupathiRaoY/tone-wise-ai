@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Dashboard | ToneWise AI</title>
+  <link rel="stylesheet" href="/dashboard.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="logo" href="/dashboard"><b>T</b> ToneWise <em>AI</em></a>
+      <nav><a class="active" href="/dashboard">Dashboard</a><a href="/workspace">New simplification</a><a href="/team-feed">Team workspace</a></nav>
+      <p class="side-label">WORKSPACE</p><p class="side-note">Make technical information clear, in your own words.</p>
+    </aside>
+    <main class="dashboard">
+      <header class="topbar">
+        <div><p class="eyebrow">YOUR WORKSPACE</p><h1 id="welcome">Welcome back</h1></div>
+        <div class="dashboard-actions">
+          <select id="team-switcher" aria-label="Switch team"><option>Loading teams...</option></select>
+          <div class="profile-wrap"><button id="notification-button" class="avatar notification-button" aria-label="Notifications" title="Notifications"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4" /></svg><span class="notification-count" hidden></span></button><div id="notification-menu" class="profile-menu" hidden></div></div>
+          <div class="profile-wrap"><button id="profile-button" class="avatar" aria-label="Open profile settings">U</button><div id="profile-menu" class="profile-menu" hidden><button id="open-profile" type="button">Profile settings</button><button id="logout" type="button">Sign out</button></div></div>
+        </div>
+      </header>
+      <section class="hero-card"><div><p class="eyebrow light">TONEWISE AI</p><h2>Turn complex information into clarity.</h2><p>Paste, upload, or speak what you need help understanding.</p><a class="start-button" href="/workspace">Start New Simplification &rarr;</a></div><div class="hero-orb">&#10022;</div></section>
+      <section class="stats"><article><span>Total simplifications</span><strong id="stat-total">0</strong></article><article><span>Most-used tone</span><strong id="stat-tone">&mdash;</strong></article><article><span>Shared teams</span><strong id="stat-teams">0</strong></article><article><span>Top AI provider</span><strong id="stat-provider">Not used yet</strong></article></section>
+      <section class="grid">
+        <section class="panel history-panel"><div class="section-title"><div><h2>Recent simplifications</h2><p>Continue where you left off.</p></div><a href="/workspace">View workspace</a></div><input id="history-search" class="search" placeholder="Search your history"><div id="history-list"></div></section>
+        <aside class="right-stack"><section class="panel voice-panel"><p class="eyebrow">VOICE ASSISTANT</p><h2>Say it instead</h2><p>Speak a report, email, or question. ToneWise will put it into a new simplification.</p><button id="voice-button" class="mic" type="button" aria-label="Start voice input">&#127908;</button><p id="voice-status" class="voice-status">Tap the microphone to start.</p></section><section class="panel teams-panel"><div class="section-title"><div><h2>Your teams</h2><p>Create, invite, and collaborate.</p></div></div><div id="teams-list"></div><form id="team-form" class="inline-form"><input name="name" maxlength="80" placeholder="New team name" required><button>Create</button></form></section></aside>
+      </section>
+    </main>
+  </div>
+  <dialog id="profile-dialog"><form id="profile-form" method="dialog"><div class="dialog-head"><h2>Profile settings</h2><button type="button" id="close-profile" aria-label="Close profile settings">&times;</button></div><label>Full name<input id="profile-name" name="full_name" maxlength="100" required autocomplete="name"></label><label>Email<input id="profile-email" type="email" disabled></label><p id="profile-error" class="form-error" hidden></p><button class="save-profile" type="submit">Save changes</button></form></dialog>
+  <script src="/dashboard.js?v=bell-icon"></script>
+</body>
+</html>
