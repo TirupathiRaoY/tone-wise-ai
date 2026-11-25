@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Dashboard | ToneWise AI</title>
-  <link rel="stylesheet" href="/dashboard.css">
+  <link rel="stylesheet" href="/dashboard.css?v=career-flows-1">
 </head>
 <body>
   <div class="app-shell">
     <aside class="sidebar">
       <a class="logo" href="/dashboard"><b>T</b> ToneWise <em>AI</em></a>
-      <nav><a class="active" href="/dashboard">Dashboard</a><a href="/workspace">New simplification</a><a href="/team-feed">Team workspace</a></nav>
+      <nav><a class="active" href="/dashboard">Dashboard</a><a href="/workspace">New simplification</a><a id="email-assistant-nav" href="/email-assistant" hidden>Email assistant</a><a href="/team-feed">Team workspace</a></nav>
       <p class="side-label">WORKSPACE</p><p class="side-note">Make technical information clear, in your own words.</p>
     </aside>
     <main class="dashboard">
@@ -22,15 +22,68 @@
           <div class="profile-wrap"><button id="profile-button" class="avatar" aria-label="Open profile settings">U</button><div id="profile-menu" class="profile-menu" hidden><button id="open-profile" type="button">Profile settings</button><button id="logout" type="button">Sign out</button></div></div>
         </div>
       </header>
-      <section class="hero-card"><div><p class="eyebrow light">TONEWISE AI</p><h2>Turn complex information into clarity.</h2><p>Paste, upload, or speak what you need help understanding.</p><a class="start-button" href="/workspace">Start New Simplification &rarr;</a></div><div class="hero-orb">&#10022;</div></section>
+      <section class="hero-card" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <div class="hero-kicker"><span class="hero-kicker-mark" aria-hidden="true">✦</span> YOUR AI WORKSPACE</div>
+          <h2 id="hero-title">Turn complex information<br>into <span>clarity.</span></h2>
+          <p>Big ideas, tangled documents, technical jargon — let’s make it all make sense.</p>
+          <div class="hero-actions">
+            <a class="start-button" href="/workspace">Start a simplification <span aria-hidden="true">→</span></a>
+            <a id="email-assistant-link" class="start-button email-assistant-link" href="/email-assistant" hidden>Open email assistant <span aria-hidden="true">→</span></a>
+          </div>
+          <div class="hero-note"><span class="hero-note-dot" aria-hidden="true"></span> Your next clear answer starts here</div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="hero-art-glow"></div>
+          <div class="hero-orbit hero-orbit-one"></div>
+          <div class="hero-orbit hero-orbit-two"></div>
+          <div class="hero-sparkle">
+            <svg viewBox="0 0 120 120" fill="none">
+              <path d="M60 7C65.6 43.1 76.9 54.4 113 60C76.9 65.6 65.6 76.9 60 113C54.4 76.9 43.1 65.6 7 60C43.1 54.4 54.4 43.1 60 7Z" fill="url(#hero-spark-gradient)"/>
+              <path d="M92 75C94.8 93.2 100.8 99.2 119 102C100.8 104.8 94.8 110.8 92 129C89.2 110.8 83.2 104.8 65 102C83.2 99.2 89.2 93.2 92 75Z" fill="#AEBBFF" transform="translate(-10 -12) scale(.8)"/>
+              <defs>
+                <linearGradient id="hero-spark-gradient" x1="20" y1="13" x2="105" y2="104" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#FFF"/>
+                  <stop offset=".48" stop-color="#C8D4FF"/>
+                  <stop offset="1" stop-color="#90A4FF"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div class="hero-float-card hero-float-input"><span class="hero-float-icon">Aa</span><span>Complex ideas</span><span class="hero-float-arrow">↗</span></div>
+          <div class="hero-float-card hero-float-output"><span class="hero-float-check">✓</span><span>Crystal clear</span></div>
+          <span class="hero-art-dot hero-art-dot-one"></span>
+          <span class="hero-art-dot hero-art-dot-two"></span>
+        </div>
+      </section>
+      <section id="job-seeker-tools" class="job-seeker-tools" aria-labelledby="job-seeker-tools-title" hidden>
+        <div class="job-tools-heading">
+          <div><p class="eyebrow">YOUR CAREER TOOLKIT</p><h2 id="job-seeker-tools-title">Your next opportunity, made clearer.</h2><p>Analyze a job, learn an interview skill, practice aptitude, or understand a recruiter message.</p></div>
+        </div>
+        <div class="job-tools-grid">
+          <a class="job-tool-card" href="/career-tools/job-description">
+            <span class="job-tool-icon" aria-hidden="true">JD</span><span class="job-tool-content"><strong>Job Description Analyzer</strong><span>See what the role involves, which skills it needs, and what to clarify before applying.</span></span><span class="job-tool-arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="job-tool-card" href="/career-tools/interview-preparation">
+            <span class="job-tool-icon" aria-hidden="true">IP</span><span class="job-tool-content"><strong>Interview Preparation</strong><span>Learn a skill or programming language, prepare interview questions, and take a topic-based quiz.</span></span><span class="job-tool-arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="job-tool-card" href="/career-tools/aptitude-learning">
+            <span class="job-tool-icon" aria-hidden="true">AP</span><span class="job-tool-content"><strong>Aptitude Learning</strong><span>Choose a topic, learn the method, then solve practice questions with a hidden answer key.</span></span><span class="job-tool-arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="job-tool-card" href="/career-tools/recruitment-email">
+            <span class="job-tool-icon" aria-hidden="true">RE</span><span class="job-tool-content"><strong>Recruitment Email Assistant</strong><span>Understand recruiter messages, spot stated deadlines, and know what to do next.</span></span><span class="job-tool-arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </section>
       <section class="stats"><article><span>Total simplifications</span><strong id="stat-total">0</strong></article><article><span>Most-used tone</span><strong id="stat-tone">&mdash;</strong></article><article><span>Shared teams</span><strong id="stat-teams">0</strong></article><article><span>Top AI provider</span><strong id="stat-provider">Not used yet</strong></article></section>
       <section class="grid">
-        <section class="panel history-panel"><div class="section-title"><div><h2>Recent simplifications</h2><p>Continue where you left off.</p></div><a href="/workspace">View workspace</a></div><input id="history-search" class="search" placeholder="Search your history"><div id="history-list"></div></section>
+        <section class="panel history-panel" id="history"><div class="section-title"><div><h2>Recent simplifications</h2><p>Continue where you left off.</p></div><a href="/workspace">View workspace</a></div><input id="history-search" class="search" placeholder="Search your history"><div id="history-list"></div></section>
         <aside class="right-stack"><section class="panel voice-panel"><p class="eyebrow">VOICE ASSISTANT</p><h2>Say it instead</h2><p>Speak a report, email, or question. ToneWise will put it into a new simplification.</p><button id="voice-button" class="mic" type="button" aria-label="Start voice input">&#127908;</button><p id="voice-status" class="voice-status">Tap the microphone to start.</p></section><section class="panel teams-panel"><div class="section-title"><div><h2>Your teams</h2><p>Create, invite, and collaborate.</p></div></div><div id="teams-list"></div><form id="team-form" class="inline-form"><input name="name" maxlength="80" placeholder="New team name" required><button>Create</button></form></section></aside>
       </section>
     </main>
   </div>
   <dialog id="profile-dialog"><form id="profile-form" method="dialog"><div class="dialog-head"><h2>Profile settings</h2><button type="button" id="close-profile" aria-label="Close profile settings">&times;</button></div><label>Full name<input id="profile-name" name="full_name" maxlength="100" required autocomplete="name"></label><label>Email<input id="profile-email" type="email" disabled></label><p id="profile-error" class="form-error" hidden></p><button class="save-profile" type="submit">Save changes</button></form></dialog>
-  <script src="/dashboard.js?v=bell-icon"></script>
+  <script src="/voice-input.js?v=local-whisper-1"></script>
+  <script src="/dashboard.js?v=career-flows-1"></script>
 </body>
 </html>

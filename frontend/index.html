@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Turn technical content into clear explanations for every team.">
   <title>ToneWise AI | Clearer explanations for every team</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=response-formatting-1">
 </head>
 <body>
   <main class="page-shell">
@@ -23,9 +23,19 @@
     </header>
 
     <section class="hero" id="top">
-      <p class="eyebrow">PLAIN-LANGUAGE EXPLANATIONS</p>
-      <h1>Understand the important stuff,<br><span>without the jargon.</span></h1>
-      <p class="hero-copy">Paste technical content or upload a document. ToneWise AI will explain it clearly, without the jargon.</p>
+      <p class="eyebrow" id="workspace-eyebrow">PLAIN-LANGUAGE EXPLANATIONS</p>
+      <h1 id="workspace-title">Understand the important stuff,<br><span>without the jargon.</span></h1>
+      <p class="hero-copy" id="workspace-description">Paste technical content or upload a document. ToneWise AI will explain it clearly, without the jargon.</p>
+    </section>
+
+    <section class="role-guide" id="role-guide" hidden aria-live="polite">
+      <div class="role-guide-mark" id="role-guide-mark" aria-hidden="true"></div>
+      <div>
+        <p class="step-label" id="role-guide-label"></p>
+        <h2 id="role-guide-title"></h2>
+        <p id="role-guide-description"></p>
+      </div>
+      <ul id="role-guide-tips"></ul>
     </section>
 
     <section class="workspace" aria-label="Simplify technical content">
@@ -40,10 +50,11 @@
 
         <label class="sr-only" for="source-text">Technical content to simplify</label>
         <textarea id="source-text" maxlength="12000" placeholder="Paste technical, industry, or company content here…"></textarea>
+        <p id="question-mode-help" class="help-text" hidden>With a file selected, text here is sent as your question about the document.</p>
         <div class="voice-input-row"><button id="source-voice-button" class="voice-button" type="button" aria-label="Dictate content">&#127908; Dictate content</button><span id="voice-input-status" class="voice-input-status" aria-live="polite"></span></div>
         <div class="input-footer">
           <span id="character-count">0 / 12,000 characters</span>
-          <span>Supported files: TXT, PDF, DOCX</span>
+          <span>Supported formats: .txt, .pdf, .docx</span>
         </div>
 
         <div class="upload-row">
@@ -51,9 +62,87 @@
           <label class="upload-button" for="file-input">
             <span aria-hidden="true">↑</span> Choose a file
           </label>
+          <span class="file-size-limit">Maximum file size: 10 MB</span>
           <span id="file-name" class="file-name">No file selected</span>
           <button id="remove-file" class="text-button" type="button" hidden>Remove</button>
         </div>
+
+        <fieldset class="student-tools" id="student-tools" hidden>
+          <legend>Study tools <span>Optional — choose any to add to your explanation</span></legend>
+          <div class="student-tools-grid">
+            <label class="student-tool"><input type="checkbox" name="student-feature" value="simple-concept"> <span>Simple Concept Explanation</span></label>
+            <label class="student-tool"><input type="checkbox" name="student-feature" value="real-life-examples"> <span>Real-Life Examples</span></label>
+            <label class="student-tool"><input type="checkbox" name="student-feature" value="quiz-generator"> <span>Quiz Generator</span></label>
+            <label class="student-tool"><input type="checkbox" name="student-feature" value="diagram-explanation"> <span>Diagram Explanation</span></label>
+          </div>
+          <p class="help-text">Diagram help uses text and captions extracted from your file. Image-only diagrams may not be readable.</p>
+        </fieldset>
+        <fieldset class="business-tools" id="business-tools" hidden>
+          <legend>Business document tools <span>Optional — choose any to add to your explanation</span></legend>
+          <div class="business-tools-grid">
+            <label class="business-tool"><input type="checkbox" name="business-feature" value="summarize-reports"> <span>Summarize reports</span></label>
+            <label class="business-tool"><input type="checkbox" name="business-feature" value="explain-financial-terms"> <span>Explain financial terms</span></label>
+            <label class="business-tool"><input type="checkbox" name="business-feature" value="extract-key-points"> <span>Extract key points</span></label>
+            <label class="business-tool"><input type="checkbox" name="business-feature" value="identify-decisions"> <span>Identify important decisions</span></label>
+            <label class="business-tool"><input type="checkbox" name="business-feature" value="practical-examples"> <span>Generate practical examples</span></label>
+            <label class="business-tool"><input type="checkbox" name="business-feature" value="highlight-risks"> <span>Highlight risks and concerns</span></label>
+            <label class="business-tool"><input type="checkbox" name="business-feature" value="suggest-next-steps"> <span>Suggest next steps</span></label>
+          </div>
+          <p class="help-text">Financial terms are explained for clarity, not as financial advice.</p>
+        </fieldset>
+        <fieldset class="professional-tools" id="professional-tools" hidden>
+          <legend>Work document tools <span>Optional — choose any combination</span></legend>
+          <div class="professional-tools-grid">
+            <label class="professional-tool"><input type="checkbox" name="professional-feature" value="create-table"> <span>Create a table of key information</span></label>
+            <label class="professional-tool"><input type="checkbox" name="professional-feature" value="extract-key-points"> <span>Extract key points</span></label>
+            <label class="professional-tool"><input type="checkbox" name="professional-feature" value="deadlines-responsibilities"> <span>Highlight deadlines and responsibilities</span></label>
+          </div>
+          <p class="help-text">These tools use only details found in the uploaded document.</p>
+        </fieldset>
+        <fieldset class="job-seeker-tools" id="job-seeker-tools" hidden>
+          <legend>Career tools <span>Optional — choose any to add to your explanation</span></legend>
+          <details class="job-tool-group" data-job-tool="job-description">
+            <summary>Job Description Analyzer</summary>
+            <div class="job-seeker-tools-grid">
+              <label class="job-seeker-tool"><input type="checkbox" name="job-seeker-feature" value="jd-simplify"><span>Simplify the job description</span></label>
+              <label class="job-seeker-tool"><input type="checkbox" name="job-seeker-feature" value="jd-responsibilities"><span>Explain job responsibilities</span></label>
+              <label class="job-seeker-tool"><input type="checkbox" name="job-seeker-feature" value="jd-qualifications"><span>Identify required qualifications</span></label>
+              <label class="job-seeker-tool"><input type="checkbox" name="job-seeker-feature" value="jd-skills"><span>Extract technical and soft skills</span></label>
+              <label class="job-seeker-tool"><input type="checkbox" name="job-seeker-feature" value="jd-experience"><span>Explain experience requirements</span></label>
+            </div>
+          </details>
+          <details class="job-tool-group" data-job-tool="interview-preparation">
+            <summary>Interview Preparation</summary>
+            <div class="job-seeker-tools-grid">
+              <label class="job-seeker-tool"><input type="checkbox" name="job-seeker-feature" value="interview-hr"><span>Explain HR interview questions</span></label>
+              <label class="job-seeker-tool"><input type="checkbox" name="job-seeker-feature" value="interview-technical"><span>Generate technical interview questions</span></label>
+              <label class="job-seeker-tool"><input type="checkbox" name="job-seeker-feature" value="interview-sample-answers"><span>Provide sample answers</span></label>
+              <label class="job-seeker-tool"><input type="checkbox" name="job-seeker-feature" value="interview-structure"><span>Explain how to structure answers</span></label>
+              <label class="job-seeker-tool"><input type="checkbox" name="job-seeker-feature" value="interview-followups"><span>Provide follow-up questions</span></label>
+            </div>
+          </details>
+          <details class="job-tool-group" data-job-tool="aptitude-learning">
+            <summary>Aptitude Learning</summary>
+            <div class="job-seeker-tools-grid">
+              <label class="job-seeker-tool"><input type="checkbox" name="job-seeker-feature" value="aptitude-step-by-step"><span>Explain aptitude questions step by step</span></label>
+              <label class="job-seeker-tool"><input type="checkbox" name="job-seeker-feature" value="aptitude-shortcuts"><span>Explain shortcuts and formulas</span></label>
+              <label class="job-seeker-tool"><input type="checkbox" name="job-seeker-feature" value="aptitude-practice"><span>Generate practice questions</span></label>
+              <label class="job-seeker-tool"><input type="checkbox" name="job-seeker-feature" value="aptitude-mistakes"><span>Explain incorrect answers</span></label>
+              <label class="job-seeker-tool"><input type="checkbox" name="job-seeker-feature" value="aptitude-reasoning"><span>Provide reasoning and logical explanations</span></label>
+            </div>
+          </details>
+          <details class="job-tool-group" data-job-tool="recruitment-email">
+            <summary>Recruitment Email Assistant</summary>
+            <div class="job-seeker-tools-grid">
+              <label class="job-seeker-tool"><input type="checkbox" name="job-seeker-feature" value="recruitment-invitations"><span>Explain interview invitation emails</span></label>
+              <label class="job-seeker-tool"><input type="checkbox" name="job-seeker-feature" value="recruitment-instructions"><span>Simplify HR instructions</span></label>
+              <label class="job-seeker-tool"><input type="checkbox" name="job-seeker-feature" value="recruitment-offers"><span>Explain offer letters</span></label>
+              <label class="job-seeker-tool"><input type="checkbox" name="job-seeker-feature" value="recruitment-dates"><span>Identify interview dates and requirements</span></label>
+              <label class="job-seeker-tool"><input type="checkbox" name="job-seeker-feature" value="recruitment-terminology"><span>Explain professional email terminology</span></label>
+            </div>
+          </details>
+          <p class="help-text">Use the uploaded file as the source. The assistant will distinguish stated requirements from assumptions.</p>
+        </fieldset>
       </div>
 
       <div class="card settings-card">
@@ -63,9 +152,10 @@
             <h2>Choose your explanation style</h2>
           </div>
         </div>
+        <p id="ai-provider-status" class="ai-provider-status" role="status" aria-live="polite"></p>
 
         <div class="selector-grid">
-          <div>
+          <div id="tone-control">
             <label for="tone-select">Tone</label>
             <select id="tone-select" aria-describedby="tone-help"></select>
             <p id="tone-help" class="help-text">How the explanation should sound</p>
@@ -78,7 +168,7 @@
         </div>
 
         <button id="simplify-button" class="primary-button" type="button">
-          <span aria-hidden="true">✦</span> Simplify this content
+          <span aria-hidden="true">✦</span> Generate Explanation
         </button>
         <p id="status-message" class="status-message" aria-live="polite"></p>
       </div>
@@ -164,6 +254,7 @@
   </main>
 
   <footer>© 2026 ToneWise AI · Built to make work easier to understand</footer>
-  <script src="script.js"></script>
+  <script src="/voice-input.js?v=local-whisper-1"></script>
+  <script src="script.js?v=response-formatting-1"></script>
 </body>
 </html>

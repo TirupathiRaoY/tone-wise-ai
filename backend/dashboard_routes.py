@@ -66,9 +66,12 @@ def summary(request: Request) -> dict:
     user = require_user(request)
     with get_connection() as connection:
         rows = connection.execute("SELECT session_id, original_text, tone, user_role, provider_used, created_at FROM conversations WHERE user_id=? ORDER BY created_at DESC", (user["id"],)).fetchall()
+        onboarding = connection.execute(
+            "SELECT user_type FROM user_onboarding WHERE user_id = ?", (user["id"],)
+        ).fetchone()
     conversations = [dict(row) for row in rows]
     top = lambda key, fallback: (Counter(row[key] for row in conversations if row[key]).most_common(1) or [(fallback, 0)])[0][0]
-    return {"user": public_user(user), "stats": {"total": len(conversations), "tone": top("tone", "—"), "role": top("user_role", "—"), "provider": top("provider_used", "Not used yet")}, "conversations": conversations, "teams": get_user_teams(user["id"])}
+    return {"user": {**public_user(user), "user_type": onboarding["user_type"] if onboarding else None}, "stats": {"total": len(conversations), "tone": top("tone", "—"), "role": top("user_role", "—"), "provider": top("provider_used", "Not used yet")}, "conversations": conversations, "teams": get_user_teams(user["id"])}
 
 
 @router.get("/teams")

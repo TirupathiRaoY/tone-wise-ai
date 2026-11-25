@@ -10,3 +10,66 @@ const resetConfirmForm = document.querySelector("[data-reset-confirm]");
 if (resetConfirmForm) { const token = new URLSearchParams(location.search).get("token"); if (!token) showError("This reset link is missing its token. Request a new password reset link."); resetConfirmForm.addEventListener("submit", async event => { event.preventDefault(); clearError(); const button = resetConfirmForm.querySelector("button[type=submit]"), payload = Object.fromEntries(new FormData(resetConfirmForm)); if (!token) return showError("This reset link is invalid. Request a new password reset link."); if (payload.password !== payload.confirm_password) return showError("Passwords don't match."); button.disabled = true; try { const response = await fetch("/api/auth/password-reset/confirm", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({ ...payload, token }) }); const data = await response.json(); if (!response.ok) throw new Error(data.detail || "Could not reset your password."); location.assign(data.redirect); } catch (error) { showError(error.message); button.disabled = false; } }); }
 const onboardingForm = document.querySelector("#onboarding-form");
 if (onboardingForm) { const fields = { Student:["Engineering", "Business", "Arts", "Other"], "Working Professional":["HR", "Sales", "Admin", "Support", "Management", "Other"], "Job Seeker":["Engineering", "Business", "Customer Service", "Other"], "Business Owner":["Operations", "Sales", "Management", "Other"], Other:["Other"] }; const steps = [...document.querySelectorAll(".step")], dots = [...document.querySelectorAll(".progress span")], next = document.querySelector("#next"), previous = document.querySelector("#previous"); let step = 0; const renderFields = () => { const selected = onboardingForm.querySelector("input[name=user_type]:checked")?.value, select = document.querySelector("#field-select"); select.innerHTML = '<option value="">Select an option</option>' + (fields[selected] || []).map(v => `<option>${v}</option>`).join(""); onboardingForm.querySelector("[name=user_type_other]").classList.toggle("hidden", selected !== "Other"); }; onboardingForm.querySelectorAll("input[name=user_type]").forEach(input => input.addEventListener("change", renderFields)); document.querySelector("#field-select").addEventListener("change", event => onboardingForm.querySelector("[name=field_other]").classList.toggle("hidden", event.target.value !== "Other")); function displayStep() { steps.forEach((item, index) => item.classList.toggle("active", index === step)); dots.forEach((item, index) => item.classList.toggle("active", index <= step)); previous.hidden = step === 0; next.textContent = step === steps.length - 1 ? "Finish setup" : "Continue"; clearError(); } function validStep() { if (step === 0 && !onboardingForm.querySelector("input[name=user_type]:checked")) return "Choose the option that best describes you."; if (step === 0 && onboardingForm.user_type_other.value === "" && onboardingForm.querySelector("input[name=user_type]:checked")?.value === "Other") return "Please describe yourself."; if (step === 1 && !onboardingForm.field.value) return "Choose your role or field."; if (step === 1 && onboardingForm.field.value === "Other" && !onboardingForm.field_other.value.trim()) return "Please enter your role or field."; if (step === 2 && !onboardingForm.querySelector("input[name=goals]:checked")) return "Select at least one goal."; if (step === 3 && !onboardingForm.querySelector("input[name=technical_background]:checked")) return "Choose your technical background."; return ""; } next.addEventListener("click", async () => { const message = validStep(); if (message) return showError(message); if (step < steps.length - 1) { step++; displayStep(); return; } next.disabled = true; next.textContent = "Saving..."; const data = Object.fromEntries(new FormData(onboardingForm)); data.goals = [...onboardingForm.querySelectorAll("input[name=goals]:checked")].map(input => input.value); try { const response = await fetch("/api/auth/onboarding", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(data) }); const result = await response.json(); if (!response.ok) throw new Error(result.detail || "Could not save your answers."); location.assign(result.redirect); } catch (error) { showError(error.message); next.disabled = false; next.textContent = "Finish setup"; } }); previous.addEventListener("click", () => { step--; displayStep(); }); fetch("/api/auth/me").then(r => r.json()).then(data => { if (!data.authenticated) location.replace("/signin"); else if (data.user.onboarding_complete) location.replace("/"); }).catch(() => {}); displayStep(); }
+
+const goalOptions = document.querySelector("#goal-options");
+if (onboardingForm && goalOptions) {
+  const goalsByUserType = {
+    Student: [
+      "Understand class notes, textbooks, and study materials",
+      "Break down technical or scientific concepts",
+      "Summarize research papers and readings",
+      "Prepare for exams with clear explanations",
+      "Improve essays, reports, and presentations",
+    ],
+    "Working Professional": [
+      "Simplify technical reports, emails, and documents",
+      "Understand industry terms, policies, and procedures",
+      "Turn meeting notes into clear action items",
+      "Write clearer updates for clients and colleagues",
+      "Help my team communicate complex ideas",
+    ],
+    "Job Seeker": [
+      "Understand job descriptions and role requirements",
+      "Improve my resume and cover letter",
+      "Prepare clear answers to interview questions",
+      "Learn industry terms and in-demand skills",
+      "Understand job offers and employment documents",
+    ],
+    "Business Owner": [
+      "Understand contracts, invoices, and business documents",
+      "Simplify financial, legal, and operational information",
+      "Write clear messages for customers",
+      "Create easy-to-understand team procedures",
+      "Explain my products or services clearly",
+    ],
+    Other: [
+      "Understand complex documents",
+      "Learn unfamiliar topics and terminology",
+      "Summarize long text into key points",
+      "Rewrite messages more clearly",
+      "Explore AI-powered simplification",
+    ],
+  };
+  const renderGoals = () => {
+    const userType = onboardingForm.querySelector('input[name="user_type"]:checked')?.value;
+    goalOptions.replaceChildren();
+    for (const goal of goalsByUserType[userType] || goalsByUserType.Other) {
+      const label = document.createElement("label");
+      label.className = "choice";
+      const input = document.createElement("input");
+      input.type = "checkbox";
+      input.name = "goals";
+      input.value = goal;
+      label.append(input, document.createTextNode(goal));
+      goalOptions.append(label);
+    }
+    document.querySelector("#goal-intro").textContent =
+      userType === "Other"
+        ? "Choose the tasks you’d like help with, or pick the options that best fit you."
+        : `Choose the tasks you’d like ToneWise AI to help you with as a ${userType?.toLowerCase() || "user"}.`;
+  };
+  onboardingForm.querySelectorAll('input[name="user_type"]').forEach((input) => {
+    input.addEventListener("change", renderGoals);
+  });
+  renderGoals();
+}

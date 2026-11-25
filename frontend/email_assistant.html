@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Draft a clear, formal business letter with ToneWise AI.">
+  <title>Business Email Assistant | ToneWise AI</title>
+  <link rel="stylesheet" href="/email-assistant.css?v=business-email-tools-1">
+</head>
+<body>
+  <main class="email-shell">
+    <header class="email-header">
+      <a class="brand" href="/dashboard"><span class="brand-mark">T</span><span>ToneWise <strong>AI</strong></span></a>
+      <nav aria-label="Workspace navigation">
+        <a href="/dashboard">Dashboard</a>
+        <a href="/workspace">New simplification</a>
+      </nav>
+    </header>
+
+    <section class="intro">
+      <p class="eyebrow">BUSINESS OWNER TOOL</p>
+      <h1>Write a clear, formal<br><span>business letter.</span></h1>
+      <p>Share the people, purpose, dates, and details. ToneWise will organize them into a polished letter without changing the facts.</p>
+    </section>
+
+    <form id="email-form" class="email-card">
+      <div class="form-heading">
+        <div><p class="step-label">SENDER AND RECIPIENT</p><h2>Who is this letter for?</h2></div>
+        <span class="required-note">* Required</span>
+      </div>
+      <div class="address-grid">
+        <fieldset>
+          <legend>From</legend>
+          <label>Full name *<input name="sender_name" maxlength="120" autocomplete="name" required placeholder="Your full name"></label>
+          <label>Job title or business<input name="sender_title" maxlength="120" autocomplete="organization-title" placeholder="Owner, Acme Co."></label>
+          <label>Email address<input name="sender_email" type="email" maxlength="254" autocomplete="email" placeholder="you@business.com"></label>
+          <label>Mailing address<textarea name="sender_address" rows="3" maxlength="500" autocomplete="street-address" placeholder="Street, city, state, postal code"></textarea></label>
+        </fieldset>
+        <fieldset>
+          <legend>To</legend>
+          <label>Recipient full name *<input name="recipient_name" maxlength="120" required placeholder="Recipient's full name"></label>
+          <label>Job title or organization<input name="recipient_title" maxlength="120" placeholder="Role or organization"></label>
+          <label>Email address<input name="recipient_email" type="email" maxlength="254" placeholder="recipient@business.com"></label>
+          <label>Mailing address<textarea name="recipient_address" rows="3" maxlength="500" placeholder="Street, city, state, postal code"></textarea></label>
+        </fieldset>
+      </div>
+
+      <div class="letter-details">
+        <p class="step-label">LETTER DETAILS</p>
+        <label>Subject *<input name="subject" maxlength="200" required placeholder="What is this letter about?"></label>
+        <label>Letter date<input name="letter_date" type="date"></label>
+        <label>Important dates or deadlines<textarea name="important_dates" rows="2" maxlength="1000" placeholder="For example: delivery by 15 June, meeting on 20 June"></textarea></label>
+        <label>Purpose and other important details *<textarea name="key_details" rows="7" maxlength="6000" required placeholder="What do you need to communicate? Include key facts, amounts, requests, commitments, and any preferred next steps."></textarea></label>
+        <p class="form-help">The assistant uses a formal style automatically; there is no tone setting. Review the draft before sending.</p>
+      </div>
+      <p id="email-error" class="error-message" role="alert" hidden></p>
+      <button id="generate-letter" class="primary-button" type="submit"><span aria-hidden="true">✦</span> Create formal letter</button>
+    </form>
+
+    <section id="letter-result" class="letter-result" aria-live="polite" hidden>
+      <div class="result-heading">
+        <div><p class="step-label">YOUR DRAFT</p><h2>Review your formal letter</h2></div>
+        <div class="result-actions"><button id="copy-letter" type="button" class="secondary-button">Copy letter</button><button id="download-letter" type="button" class="secondary-button">Download .txt</button></div>
+      </div>
+      <p id="letter-provider" class="provider-note"></p>
+      <article id="letter-content" class="letter-content"></article>
+      <p class="review-note">Please verify names, dates, addresses, amounts, and commitments before sending.</p>
+    </section>
+  </main>
+  <footer>ToneWise AI · Clear communication for your business</footer>
+  <script src="/email-assistant.js?v=business-email-tools-1"></script>
+</body>
+</html>

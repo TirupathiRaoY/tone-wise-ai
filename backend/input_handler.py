@@ -12,8 +12,12 @@ Nothing in here calls the AI. This module's ONLY job is:
 """
 
 import os
+from docx.oxml.table import CT_Tbl
+from docx.oxml.text.paragraph import CT_P
 from pypdf import PdfReader
 from docx import Document
+from docx.table import Table
+from docx.text.paragraph import Paragraph
 
 
 # ---------------------------------------------------------------------------
@@ -70,8 +74,24 @@ def extract_text_from_pdf(file_path: str) -> str:
 
 def extract_text_from_docx(file_path: str) -> str:
     document = Document(file_path)
-    all_text = [paragraph.text for paragraph in document.paragraphs if paragraph.text.strip()]
-    return "\n".join(all_text)
+    blocks = []
+
+    for element in document.element.body.iterchildren():
+        if isinstance(element, CT_P):
+            paragraph = Paragraph(element, document)
+            if paragraph.text.strip():
+                blocks.append(paragraph.text.strip())
+        elif isinstance(element, CT_Tbl):
+            table = Table(element, document)
+            rows = []
+            for row in table.rows:
+                cells = [cell.text.strip().replace("\n", " ") for cell in row.cells]
+                if any(cells):
+                    rows.append(" | ".join(cells))
+            if rows:
+                blocks.append("\n".join(rows))
+
+    return "\n\n".join(blocks)
 
 
 # ---------------------------------------------------------------------------
@@ -110,10 +130,19 @@ def handle_uploaded_file(file_path: str) -> dict:
         extracted = extracted.strip()
 
         if not extracted:
+            if extension == ".pdf":
+                error = (
+                    "No selectable text was found in this PDF. If it is scanned or image-only, "
+                    "upload an OCR-searchable PDF instead."
+                )
+            elif extension == ".docx":
+                error = "No readable paragraph or table text was found in this DOCX file."
+            else:
+                error = "This TXT file is empty or contains no readable text."
             return {
                 "success": False,
                 "text": None,
-                "error": "The file appears to be empty or the text couldn't be read (e.g. a scanned PDF with no selectable text).",
+                "error": error,
             }
 
         return {"success": True, "text": extracted, "error": None}

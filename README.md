@@ -25,8 +25,52 @@ personalization — built entirely with FREE AI APIs.
 4. Right-click the `backend` folder → "Open in Integrated Terminal"
 5. Run: `pip install -r requirements.txt`
 6. Rename `backend/.env.example` to `backend/.env`
-7. Fill in your free API keys inside `.env` (see links below)
+7. Fill in your free API keys inside `.env` (see links below). For Gemini or
+   Groq, you can set `GEMINI_API_KEYS` or `GROQ_API_KEYS` to a comma-separated
+   list; the app tries the next key when one is rejected or rate-limited.
+   Keep `.env` private and rotate any key shared in chat, logs, or source control.
 8. Test Module 1 works: `python ai_provider_manager.py`
+
+### Local voice input
+
+Voice recordings are transcribed on this computer with the multilingual
+Whisper `base` model. The model downloads automatically on the first
+transcription (about 150 MB); recordings are not sent to a speech provider.
+Allow microphone access in your browser and choose the language you are
+speaking in before dictating in the workspace.
+
+### Role-tailored workspaces
+
+The workspace adapts its guidance and examples to the role selected during
+onboarding. Students can select optional study tools after uploading a file:
+simple concept explanations, real-life examples, a quiz, and diagram
+explanations based on text and captions extracted from the document.
+
+Business Owner workspaces include optional report and document analysis
+checklists on uploaded files, plus a separate formal letter assistant for
+sender/recipient details, subject, dates, and key points. Business tools are
+available only to Business Owner accounts.
+
+Working Professional workspaces can upload PDF, DOCX, or TXT files, ask an
+optional question about the document, and select any combination of table
+creation, key-point extraction, and deadline/responsibility extraction.
+
+Job Seeker dashboards include four separate career workflows: job-description
+analysis from pasted text or an uploaded file; skill-based interview lessons
+and quizzes; aptitude lessons and quizzes; and recruitment-message explanations
+selected by message type. Interview and aptitude quizzes offer beginner,
+intermediate, and advanced difficulty, answer selection, scoring, and
+post-submission explanations. These routes and their AI endpoint are restricted
+to Job Seeker accounts. The general workspace remains available and uses
+job-search terminology in follow-up chat.
+
+### Local Ollama
+
+Install and start Ollama, then download the configured model from the backend
+terminal with `ollama pull llama3.2:1b`. Configured online providers are tried
+first; Ollama is the final local fallback if they fail. Set `OLLAMA_HOST`,
+`OLLAMA_MODEL`, or `PROVIDER_ORDER` in `backend/.env` to use a different local
+model or provider order. Restart the backend after changing these settings.
 
 ## Free API Key Links
 

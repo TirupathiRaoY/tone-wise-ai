@@ -62,12 +62,42 @@ class OnboardingRequest(BaseModel):
 
 USER_TYPES = {"Student", "Working Professional", "Job Seeker", "Business Owner", "Other"}
 TECHNICAL_LEVELS = {"None at all", "A little", "Comfortable with basics", "Fairly technical"}
-GOALS = {
-    "Understanding technical reports/emails at work",
-    "Learning industry terms as a student",
-    "Preparing for interviews",
-    "Helping my team communicate better",
-    "Just exploring",
+GOALS_BY_USER_TYPE = {
+    "Student": {
+        "Understand class notes, textbooks, and study materials",
+        "Break down technical or scientific concepts",
+        "Summarize research papers and readings",
+        "Prepare for exams with clear explanations",
+        "Improve essays, reports, and presentations",
+    },
+    "Working Professional": {
+        "Simplify technical reports, emails, and documents",
+        "Understand industry terms, policies, and procedures",
+        "Turn meeting notes into clear action items",
+        "Write clearer updates for clients and colleagues",
+        "Help my team communicate complex ideas",
+    },
+    "Job Seeker": {
+        "Understand job descriptions and role requirements",
+        "Improve my resume and cover letter",
+        "Prepare clear answers to interview questions",
+        "Learn industry terms and in-demand skills",
+        "Understand job offers and employment documents",
+    },
+    "Business Owner": {
+        "Understand contracts, invoices, and business documents",
+        "Simplify financial, legal, and operational information",
+        "Write clear messages for customers",
+        "Create easy-to-understand team procedures",
+        "Explain my products or services clearly",
+    },
+    "Other": {
+        "Understand complex documents",
+        "Learn unfamiliar topics and terminology",
+        "Summarize long text into key points",
+        "Rewrite messages more clearly",
+        "Explore AI-powered simplification",
+    },
 }
 
 
@@ -217,6 +247,7 @@ def me(request: Request) -> dict:
         if onboarding:
             response["preferences"] = {
                 "default_tone": onboarding["default_tone"], "default_role": onboarding["default_role"],
+                "user_type": onboarding["user_type"], "field": onboarding["field"],
             }
     return response
 
@@ -247,7 +278,7 @@ def save_onboarding(payload: OnboardingRequest, request: Request) -> dict:
         return {"success": True, "redirect": "/dashboard"}
     if payload.user_type not in USER_TYPES or payload.technical_background not in TECHNICAL_LEVELS:
         raise HTTPException(status_code=400, detail="Please choose a valid answer.")
-    if not set(payload.goals).issubset(GOALS):
+    if not set(payload.goals).issubset(GOALS_BY_USER_TYPE[payload.user_type]):
         raise HTTPException(status_code=400, detail="One of the selected goals is not valid.")
     if payload.user_type == "Other" and not (payload.user_type_other or "").strip():
         raise HTTPException(status_code=400, detail="Please describe yourself.")

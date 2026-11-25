@@ -1,1 +1,58 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Getting started | ToneWise AI</title><link rel="stylesheet" href="/auth.css"></head><body class="auth-page"><main class="auth-wrap"><a class="auth-brand" href="/"><span class="auth-mark">T</span> ToneWise AI</a><section class="auth-card"><div class="progress" aria-label="Onboarding progress"><span class="active"></span><span></span><span></span><span></span></div><div class="error-box" id="form-error" hidden></div><form id="onboarding-form"><section class="step active"><h2>Tell us about yourself</h2><p>This helps us tailor ToneWise AI to you.</p><div class="choice-list" data-radio-group="user_type"><label class="choice"><input type="radio" name="user_type" value="Student" required>Student</label><label class="choice"><input type="radio" name="user_type" value="Working Professional">Working Professional</label><label class="choice"><input type="radio" name="user_type" value="Job Seeker">Job Seeker</label><label class="choice"><input type="radio" name="user_type" value="Business Owner">Business Owner</label><label class="choice"><input type="radio" name="user_type" value="Other">Other</label></div><input class="other-input hidden" name="user_type_other" placeholder="Please describe yourself"></section><section class="step"><h2>What's your role or field?</h2><p>We will use this to choose a useful starting role.</p><label class="option-title">Field<select name="field" required id="field-select"></select></label><input class="other-input hidden" name="field_other" placeholder="Enter your role or field"></section><section class="step"><h2>What do you want to use ToneWise AI for?</h2><p>Select all that apply.</p><div class="choice-list"><label class="choice"><input type="checkbox" name="goals" value="Understanding technical reports/emails at work">Understanding technical reports/emails at work</label><label class="choice"><input type="checkbox" name="goals" value="Learning industry terms as a student">Learning industry terms as a student</label><label class="choice"><input type="checkbox" name="goals" value="Preparing for interviews">Preparing for interviews</label><label class="choice"><input type="checkbox" name="goals" value="Helping my team communicate better">Helping my team communicate better</label><label class="choice"><input type="checkbox" name="goals" value="Just exploring">Just exploring</label></div></section><section class="step"><h2>How much technical background do you have?</h2><p>There are no wrong answers—this only affects your default explanation style.</p><div class="choice-list"><label class="choice"><input type="radio" name="technical_background" value="None at all" required>None at all</label><label class="choice"><input type="radio" name="technical_background" value="A little">A little</label><label class="choice"><input type="radio" name="technical_background" value="Comfortable with basics">Comfortable with basics</label><label class="choice"><input type="radio" name="technical_background" value="Fairly technical">Fairly technical</label></div></section><div class="onboard-actions"><button type="button" class="secondary-auth" id="previous" hidden>Back</button><button type="button" class="primary-auth" id="next">Continue</button></div></form></section></main><script src="/auth.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Getting started | ToneWise AI</title>
+  <link rel="stylesheet" href="/auth.css">
+</head>
+<body class="auth-page">
+  <main class="auth-wrap">
+    <a class="auth-brand" href="/"><span class="auth-mark">T</span> ToneWise AI</a>
+    <section class="auth-card">
+      <div class="progress" aria-label="Onboarding progress"><span class="active"></span><span></span><span></span><span></span></div>
+      <div class="error-box" id="form-error" hidden></div>
+      <form id="onboarding-form">
+        <section class="step active">
+          <h2>Tell us about yourself</h2>
+          <p>This helps us tailor ToneWise AI to you.</p>
+          <div class="choice-list" data-radio-group="user_type">
+            <label class="choice"><input type="radio" name="user_type" value="Student" required>Student</label>
+            <label class="choice"><input type="radio" name="user_type" value="Working Professional">Working Professional</label>
+            <label class="choice"><input type="radio" name="user_type" value="Job Seeker">Job Seeker</label>
+            <label class="choice"><input type="radio" name="user_type" value="Business Owner">Business Owner</label>
+            <label class="choice"><input type="radio" name="user_type" value="Other">Other</label>
+          </div>
+          <input class="other-input hidden" name="user_type_other" placeholder="Please describe yourself">
+        </section>
+        <section class="step">
+          <h2>What's your role or field?</h2>
+          <p>We will use this to choose a useful starting role.</p>
+          <label class="option-title">Field<select name="field" required id="field-select"></select></label>
+          <input class="other-input hidden" name="field_other" placeholder="Enter your role or field">
+        </section>
+        <section class="step">
+          <h2>What do you want to use ToneWise AI for?</h2>
+          <p id="goal-intro" aria-live="polite">Choose the tasks you’d like help with.</p>
+          <div class="choice-list" id="goal-options" aria-label="Choose your goals" aria-live="polite"></div>
+        </section>
+        <section class="step">
+          <h2>What level of technical knowledge do you currently possess?</h2>
+          <p>Choose the option that best describes how familiar you are with technical topics. This helps us tailor your explanations.</p>
+          <div class="choice-list">
+            <label class="choice"><input type="radio" name="technical_background" value="None at all" required><span><strong>Beginner</strong><br>I’m new to technical topics and prefer plain-language explanations.</span></label>
+            <label class="choice"><input type="radio" name="technical_background" value="A little"><span><strong>Some basic knowledge</strong><br>I know a few common terms but appreciate simple explanations.</span></label>
+            <label class="choice"><input type="radio" name="technical_background" value="Comfortable with basics"><span><strong>Intermediate</strong><br>I understand the basics and can follow some technical detail.</span></label>
+            <label class="choice"><input type="radio" name="technical_background" value="Fairly technical"><span><strong>Advanced</strong><br>I’m familiar with technical concepts and can follow detailed explanations.</span></label>
+          </div>
+        </section>
+        <div class="onboard-actions">
+          <button type="button" class="secondary-auth" id="previous" hidden>Back</button>
+          <button type="button" class="primary-auth" id="next">Continue</button>
+        </div>
+      </form>
+    </section>
+  </main>
+  <script src="/auth.js"></script>
+</body>
+</html>

@@ -18,6 +18,7 @@ build/
 
 # Editor and operating-system files
 .DS_Store
+desktop.ini
 Thumbs.db
 .vscode/
 .idea/

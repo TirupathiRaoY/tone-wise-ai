@@ -7,3 +7,5 @@ pypdf
 python-docx
 itsdangerous
 email-validator
+faster-whisper>=1.1.0,<2
+av>=11.5.0,<17

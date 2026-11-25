@@ -40,6 +40,7 @@ def start_conversation(
     original_text: str,
     simplified_explanation: str,
     language: str = "English",
+    role_context: str | None = None,
 ) -> None:
     """
     Initializes a conversation with the original text + first AI explanation,
@@ -48,7 +49,12 @@ def start_conversation(
     conversation_store[session_id] = [
         {
             "role": "system_context",
-            "content": f"Output language: {language}\n\nOriginal technical text:\n{original_text}",
+            "user_type": role_context,
+            "content": (
+                f"Output language: {language}\n"
+                f"User context: {role_context or 'General'}\n\n"
+                f"Original text:\n{original_text}"
+            ),
         },
         {
             "role": "assistant",
@@ -63,13 +69,16 @@ def restore_conversation(
     simplified_explanation: str,
     saved_messages: list[dict],
     language: str = "English",
+    role_context: str | None = None,
 ) -> None:
     """Restore a saved conversation after the web server restarts.
 
     Module 7 stores the messages permanently in SQLite. This function puts
     them back into the temporary in-memory history that ask_followup() uses.
     """
-    start_conversation(session_id, original_text, simplified_explanation, language)
+    start_conversation(
+        session_id, original_text, simplified_explanation, language, role_context
+    )
     for message in saved_messages:
         role = message.get("sender_role")
         content = message.get("content")
@@ -120,8 +129,18 @@ def ask_followup(session_id: str, question: str) -> dict:
         elif turn["role"] == "user":
             history_text += f"[User previously asked]: {turn['content']}\n\n"
 
-    followup_prompt = f"""You are ToneWise AI, continuing a conversation with a
-non-technical employee about a piece of technical text.
+    assistant_context = (
+        "You are ToneWise AI, helping a job seeker understand career and recruitment information. "
+        "Use relevant terms such as job responsibilities, required and preferred qualifications, "
+        "technical and soft skills, transferable skills, recruiter, interview rounds, STAR method, "
+        "and offer terms when useful; briefly explain unfamiliar terms. Clearly separate facts "
+        "stated in the source from advice or inference. Do not invent the user's experience, "
+        "employer requirements, interview outcome, or offer details."
+        if history[0].get("user_type") == "Job Seeker"
+        else "You are ToneWise AI, continuing a conversation with a non-technical employee "
+        "about a piece of technical text."
+    )
+    followup_prompt = f"""{assistant_context}
 
 CONVERSATION SO FAR:
 {history_text}

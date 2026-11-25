@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Role-specific career learning and recruitment tools.">
+  <title>Career Tool | ToneWise AI</title>
+  <link rel="stylesheet" href="/career-tools.css?v=interactive-career-quiz-3">
+</head>
+<body>
+  <main class="career-shell">
+    <header class="career-header">
+      <a class="brand" href="/dashboard"><span class="brand-mark">T</span><span>ToneWise <strong>AI</strong></span></a>
+      <nav aria-label="Workspace navigation"><a href="/dashboard">Dashboard</a><a href="/workspace">New simplification</a></nav>
+    </header>
+
+    <a class="back-link" href="/dashboard#job-seeker-tools">← Back to career tools</a>
+    <section class="career-intro">
+      <p class="eyebrow">JOB SEEKER TOOLKIT</p>
+      <h1 id="tool-title">Career clarity, focused on your next step.</h1>
+      <p id="tool-description"></p>
+    </section>
+
+    <section class="career-card" id="workflow-job-description" hidden>
+      <div class="card-heading"><span class="workflow-icon">01</span><div><p class="step-label">JOB DESCRIPTION ANALYZER</p><h2>Understand the role before you apply.</h2>      <p>Add the role description and get a clear, practical breakdown of what the employer needs and what to pay attention to.</p></div></div>
+      <form class="career-form" data-tool="job-description">
+        <label for="job-description-text">Paste the job description</label>
+        <textarea id="job-description-text" name="text" rows="8" maxlength="12000" placeholder="Paste the full job description here…"></textarea>
+        <div class="upload-row"><span>Or upload a document (.txt, .pdf, .docx; max 10 MB)</span><input id="job-description-file" name="file" type="file" accept=".txt,.pdf,.docx"></div>
+        <p class="field-help">Choose either pasted text or one file. Your report highlights responsibilities, required and preferred qualifications, skills, experience, and questions to ask the recruiter.</p>
+        <button class="primary-button" type="submit">Analyze this job description <span aria-hidden="true">→</span></button>
+      </form>
+    </section>
+
+    <section class="career-card" id="workflow-interview-preparation" hidden>
+      <div class="card-heading"><span class="workflow-icon">02</span><div><p class="step-label">INTERVIEW PREPARATION</p><h2>Build a skill. Practice explaining it.</h2><p>Pick a subject—from workplace communication to a programming language. Start with a practical lesson or check your knowledge with a quiz.</p></div></div>
+      <form class="career-form" data-tool="interview-preparation">
+        <label for="interview-topic">What skill or topic are you interested in?</label>
+        <textarea id="interview-topic" name="topic" rows="4" maxlength="2000" placeholder="Try “confident communication in interviews”, “Python functions”, or “SQL joins”…"></textarea>
+        <fieldset class="difficulty-picker">
+          <legend>Choose your quiz difficulty</legend>
+          <div class="difficulty-options">
+            <label class="difficulty-option"><input type="radio" name="difficulty" value="Beginner" checked><span class="difficulty-name">Beginner</span><span class="difficulty-description">Learn the fundamentals</span></label>
+            <label class="difficulty-option"><input type="radio" name="difficulty" value="Intermediate"><span class="difficulty-name">Intermediate</span><span class="difficulty-description">Apply what you know</span></label>
+            <label class="difficulty-option"><input type="radio" name="difficulty" value="Advanced"><span class="difficulty-name">Advanced</span><span class="difficulty-description">Try challenging scenarios</span></label>
+          </div>
+        </fieldset>
+        <div class="button-row">
+          <button class="primary-button" type="submit" data-action="learn">Create my learning plan <span aria-hidden="true">→</span></button>
+          <button class="secondary-button" type="submit" data-action="quiz">Start a quiz</button>
+        </div>
+        <p class="field-help">Your learning plan includes a clear explanation, a practical exercise, and interview practice questions. Choose a level, then start a five-question quiz. You’ll see your score and explanations after submission.</p>
+      </form>
+    </section>
+
+    <section class="career-card" id="workflow-aptitude-learning" hidden>
+      <div class="card-heading"><span class="workflow-icon">03</span><div><p class="step-label">APTITUDE LEARNING</p><h2>Understand the method. Put it into practice.</h2><p>Choose an aptitude topic, learn the reasoning behind it, and then solve questions at a difficulty that suits you.</p></div></div>
+      <form class="career-form" data-tool="aptitude-learning">
+        <label for="aptitude-topic">What topic do you want to learn?</label>
+        <textarea id="aptitude-topic" name="topic" rows="4" maxlength="2000" placeholder="Try “percentages”, “time and work”, “ratios”, or “logical reasoning”…"></textarea>
+        <fieldset class="difficulty-picker">
+          <legend>Choose your practice difficulty</legend>
+          <div class="difficulty-options">
+            <label class="difficulty-option"><input type="radio" name="difficulty" value="Beginner" checked><span class="difficulty-name">Beginner</span><span class="difficulty-description">Learn the basics</span></label>
+            <label class="difficulty-option"><input type="radio" name="difficulty" value="Intermediate"><span class="difficulty-name">Intermediate</span><span class="difficulty-description">Apply the methods</span></label>
+            <label class="difficulty-option"><input type="radio" name="difficulty" value="Advanced"><span class="difficulty-name">Advanced</span><span class="difficulty-description">Solve harder problems</span></label>
+          </div>
+        </fieldset>
+        <div class="button-row">
+          <button class="primary-button" type="submit" data-action="learn">Teach me &amp; give me practice <span aria-hidden="true">→</span></button>
+          <button class="secondary-button" type="submit" data-action="quiz">Start a quiz</button>
+        </div>
+        <p class="field-help">Lessons include a worked example and practice questions. Quizzes contain five questions; submit your choices to see your score and explanations.</p>
+      </form>
+    </section>
+
+    <section class="career-card" id="workflow-recruitment-email" hidden>
+      <div class="card-heading"><span class="workflow-icon">04</span><div><p class="step-label">RECRUITMENT EMAIL ASSISTANT</p><h2>Know what the recruiter is asking you to do.</h2><p>Choose the kind of message and paste or upload it. We’ll explain the message and surface dates, action items, and requirements.</p></div></div>
+      <form class="career-form" data-tool="recruitment-email">
+        <label for="email-type">What kind of recruitment message is it?</label>
+        <select id="email-type" name="email_type" required>
+          <option value="">Choose a message type</option>
+          <option>Interview invitation</option>
+          <option>HR instructions</option>
+          <option>Offer letter</option>
+          <option>Recruiter follow-up</option>
+          <option>Other recruitment email</option>
+        </select>
+        <label for="recruitment-email-text">Paste the message</label>
+        <textarea id="recruitment-email-text" name="text" rows="7" maxlength="12000" placeholder="Paste the recruiter or HR message here…"></textarea>
+        <div class="upload-row"><span>Or upload a document (.txt, .pdf, .docx; max 10 MB)</span><input id="recruitment-email-file" name="file" type="file" accept=".txt,.pdf,.docx"></div>
+        <p class="field-help">Choose either pasted text or one file. We’ll identify deadlines only when they’re stated in the message.</p>
+        <button class="primary-button" type="submit">Explain this message <span aria-hidden="true">→</span></button>
+      </form>
+    </section>
+
+    <p id="tool-status" class="status-message" role="status" aria-live="polite"></p>
+
+    <section id="tool-result" class="result-card" aria-live="polite" hidden>
+      <div class="result-heading"><div><p class="step-label">YOUR CAREER GUIDE</p><h2 id="result-title">Your results</h2></div><button id="copy-result" class="secondary-button" type="button">Copy</button></div>
+      <p id="provider-note" class="provider-note"></p>
+      <article id="result-content" class="result-content"></article>
+      <section id="quiz-panel" class="quiz-panel" hidden>
+        <div class="quiz-progress-row"><span id="quiz-progress">Question 1 of 5</span><span id="quiz-difficulty-badge"></span></div>
+        <div id="quiz-questions"></div>
+        <div class="quiz-actions"><button id="submit-quiz" class="primary-button" type="button">Submit my answers</button><button id="retake-quiz" class="secondary-button" type="button" hidden>Try another quiz</button></div>
+        <p id="quiz-score" class="quiz-score" aria-live="polite"></p>
+      </section>
+    </section>
+  </main>
+  <footer>ToneWise AI · Clearer steps toward your next opportunity</footer>
+  <script src="/career-tools.js?v=interactive-career-quiz-3"></script>
+</body>
+</html>

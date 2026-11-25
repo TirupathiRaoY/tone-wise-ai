@@ -4,6 +4,22 @@ let conversations = [];
 let accountUser = null;
 const DashboardSpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
+function speechRecognitionErrorMessage(error) {
+  if (error === "not-allowed" || error === "permission-denied" || error === "service-not-allowed") {
+    return "Microphone or speech access is blocked. Allow it in your browser's site settings, then try again.";
+  }
+  if (error === "audio-capture") {
+    return "No microphone was found. Connect a microphone and check your Windows input settings.";
+  }
+  if (error === "network") {
+    return "Could not reach the browser's speech service. Check your internet connection and try again.";
+  }
+  if (error === "no-speech") {
+    return "No speech was detected. Check your microphone input and try speaking again.";
+  }
+  return `Voice error: ${error}. Please try again.`;
+}
+
 async function api(url, options) {
   const response = await fetch(url, options);
   if (response.status === 401) return location.assign("/signin");
@@ -35,6 +51,20 @@ async function load() {
   const data = await api("/api/dashboard/summary");
   conversations = data.conversations;
   setProfileUser(data.user);
+  const isBusinessOwner = data.user.user_type === "Business Owner";
+  const isJobSeeker = data.user.user_type === "Job Seeker";
+  $("#email-assistant-nav").hidden = !isBusinessOwner;
+  $("#email-assistant-link").hidden = !isBusinessOwner;
+  $("#job-seeker-tools").hidden = !isJobSeeker;
+  if (isJobSeeker) {
+    $("#hero-title").innerHTML = "Make your next career move<br>with <span>confidence.</span>";
+    document.querySelector(".hero-copy > p:not(.hero-kicker)").textContent =
+      "Decode job descriptions, prepare for interviews, and understand every step of the hiring process.";
+    const careerStartLink = document.querySelector(".hero-actions .start-button");
+    careerStartLink.href = "/career-tools/job-description";
+    careerStartLink.textContent = "Start career preparation →";
+    document.querySelector(".hero-note").lastChild.textContent = " Your next opportunity starts with clarity";
+  }
   $("#welcome").textContent = `Welcome back, ${data.user.full_name.split(" ")[0]}`;
   $("#stat-total").textContent = data.stats.total;
   $("#stat-tone").textContent = data.stats.tone;
@@ -88,37 +118,16 @@ function setupVoiceAssistant() {
     status.textContent = muted ? "Voice replies are on." : "Voice replies are muted.";
   };
   updateMuteButton();
-  if (!DashboardSpeechRecognition) {
-    button.disabled = true;
-    status.textContent = "Voice input is available in Chrome or Edge.";
-    return;
-  }
-  button.onclick = () => {
-    const recognition = new DashboardSpeechRecognition();
-    recognition.lang = "en-US";
-    recognition.interimResults = true;
-    recognition.continuous = false;
-    let finalText = "";
-    button.disabled = true;
-    button.classList.add("listening");
-    status.textContent = "Listening...";
-    recognition.onresult = (event) => {
-      let interimText = "";
-      for (let index = event.resultIndex; index < event.results.length; index += 1) {
-        if (event.results[index].isFinal) finalText += event.results[index][0].transcript;
-        else interimText += event.results[index][0].transcript;
-      }
-      status.textContent = finalText || interimText || "Listening...";
-    };
-    recognition.onerror = (event) => { status.textContent = event.error === "not-allowed" ? "Microphone access was blocked. Allow it, then try again." : "I couldn't hear that. Please try again."; };
-    recognition.onend = () => {
-      button.disabled = false;
-      button.classList.remove("listening");
-      if (finalText.trim()) location.assign(`/workspace?voiceText=${encodeURIComponent(finalText.trim())}`);
-      else if (status.textContent === "Listening...") status.textContent = "Tap the microphone to start.";
-    };
-    try { recognition.start(); } catch { button.disabled = false; button.classList.remove("listening"); status.textContent = "Voice input is already active. Please try again in a moment."; }
-  };
+
+  window.setupVoiceInput({
+    button,
+    status,
+    language: () => "English",
+    onTranscription: (text) => {
+      status.textContent = "✅ Got it! Opening workspace…";
+      location.assign(`/workspace?voiceText=${encodeURIComponent(text)}`);
+    },
+  });
 }
 
 async function notifications() {
